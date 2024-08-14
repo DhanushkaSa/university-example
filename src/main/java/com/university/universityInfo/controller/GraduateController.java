@@ -1,5 +1,6 @@
 package com.university.universityInfo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.university.universityInfo.dto.GraduateDto;
 import com.university.universityInfo.entity.Graduate;
+import com.university.universityInfo.entity.Subject;
 import com.university.universityInfo.entity.University;
 import com.university.universityInfo.service.GraduateService;
+import com.university.universityInfo.service.SubjectService;
 import com.university.universityInfo.service.UniversityService;
 
 @RestController
@@ -27,24 +30,47 @@ public class GraduateController {
     @Autowired
     public UniversityService universityService;
 
+    @Autowired
+    public SubjectService subjectService;
+
     @PostMapping("/graduate")
     public ResponseEntity<?> createGraduate(@RequestBody GraduateDto graduateDto) {
         Graduate createGraduate = new Graduate();
         createGraduate.setName(graduateDto.getName());
         createGraduate.setAge(graduateDto.getAge());
 
+        
+
         University university = universityService.getUni(graduateDto.getId());
         if (university == null) {
             return ResponseEntity.status(404).body("University not found");
         } else {
             createGraduate.setUniversity(university);
-            return ResponseEntity.status(201).body(graduateService.createGraduate(createGraduate));
+            List<Subject> array = new ArrayList<>();
+            List<Long> subjectList = graduateDto.getSubjectId();
+            for (Long subjectId : subjectList) {
+                Subject subject = subjectService.getSubject(subjectId);
+                if(subject!=null){
+                    array.add(subject);
+                }
+               
+            }
+            createGraduate.setGraduateSubjects(array);
+            System.out.println("Subjects size before save: " + createGraduate.getGraduateSubjects().size());
+
+            Graduate newGraduate=graduateService.createGraduate(createGraduate);
+
+            System.out.println("Subjects size after save: " + newGraduate.getGraduateSubjects().size());
+
+            return ResponseEntity.status(201).body(newGraduate);
         }
     }
 
     @GetMapping("/graduate")
     public ResponseEntity<List<Graduate>> getAllGraduate() {
+        
         return ResponseEntity.status(200).body(graduateService.getAllGraduate());
+
     }
 
     @GetMapping("/graduate/{graduateId}")
@@ -53,6 +79,7 @@ public class GraduateController {
         if (graduate == null) {
             return ResponseEntity.status(404).body("Graduate not found");
         } else {
+            System.out.println(graduate.getGraduateSubjects().size());
             return ResponseEntity.status(200).body(graduate);
         }
     }

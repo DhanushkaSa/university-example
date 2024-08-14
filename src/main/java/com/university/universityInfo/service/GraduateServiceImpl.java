@@ -15,6 +15,7 @@ public class GraduateServiceImpl implements GraduateService {
     @Autowired
     public GraduateRepository graduateRepository;
 
+    
     @Override
     public Graduate createGraduate(Graduate graduate) {
         return graduateRepository.save(graduate);

@@ -1,5 +1,7 @@
 package com.university.universityInfo.dto;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,4 +21,6 @@ public class GraduateDto {
     private Integer age;
 
     private Long id;
+
+    private List<Long> subjectId;
 }
