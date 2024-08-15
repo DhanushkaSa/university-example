@@ -30,7 +30,9 @@ public class University {
     private String location;
 
     @JsonIgnore
+
     @OneToMany(mappedBy = "university")
+    
     private List<Graduate> graduate;
     
 }

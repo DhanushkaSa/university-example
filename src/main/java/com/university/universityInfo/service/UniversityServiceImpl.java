@@ -32,6 +32,7 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public University updateUni(Long uniId, University university) {
         University updateUniversity = universityRepository.findById(uniId).orElse(null);
+        
         if (updateUniversity == null) {
             return null;
         } else {

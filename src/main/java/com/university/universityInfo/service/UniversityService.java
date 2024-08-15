@@ -18,4 +18,5 @@ public interface UniversityService {
     public University updateUni(Long uniId,University university);
 
     public void deleteUni(Long uniId);
+
 }

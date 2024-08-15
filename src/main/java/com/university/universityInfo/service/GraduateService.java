@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.university.universityInfo.entity.Graduate;
 
 @Service
-public interface GraduateService {
+public interface GraduateService  {
 
     public Graduate createGraduate(Graduate graduate);
 

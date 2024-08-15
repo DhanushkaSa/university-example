@@ -39,9 +39,8 @@ public class GraduateController {
         createGraduate.setName(graduateDto.getName());
         createGraduate.setAge(graduateDto.getAge());
 
-        
-
         University university = universityService.getUni(graduateDto.getId());
+
         if (university == null) {
             return ResponseEntity.status(404).body("University not found");
         } else {
@@ -49,18 +48,17 @@ public class GraduateController {
             List<Subject> array = new ArrayList<>();
             List<Long> subjectList = graduateDto.getSubjectId();
             for (Long subjectId : subjectList) {
+
                 Subject subject = subjectService.getSubject(subjectId);
-                if(subject!=null){
+
+                if (subject != null) {
                     array.add(subject);
                 }
-               
+
             }
             createGraduate.setGraduateSubjects(array);
-            System.out.println("Subjects size before save: " + createGraduate.getGraduateSubjects().size());
 
-            Graduate newGraduate=graduateService.createGraduate(createGraduate);
-
-            System.out.println("Subjects size after save: " + newGraduate.getGraduateSubjects().size());
+            Graduate newGraduate = graduateService.createGraduate(createGraduate);
 
             return ResponseEntity.status(201).body(newGraduate);
         }
@@ -68,7 +66,7 @@ public class GraduateController {
 
     @GetMapping("/graduate")
     public ResponseEntity<List<Graduate>> getAllGraduate() {
-        
+
         return ResponseEntity.status(200).body(graduateService.getAllGraduate());
 
     }
@@ -76,10 +74,11 @@ public class GraduateController {
     @GetMapping("/graduate/{graduateId}")
     public ResponseEntity<?> getGraduate(@PathVariable Long graduateId) {
         Graduate graduate = graduateService.getGraduate(graduateId);
+
         if (graduate == null) {
             return ResponseEntity.status(404).body("Graduate not found");
         } else {
-            System.out.println(graduate.getGraduateSubjects().size());
+
             return ResponseEntity.status(200).body(graduate);
         }
     }

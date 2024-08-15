@@ -15,9 +15,11 @@ import lombok.Setter;
 public class GraduateDto {
     
     @Column(nullable = false)
+
     private String name;
     
     @Column(nullable = false)
+    
     private Integer age;
 
     private Long id;

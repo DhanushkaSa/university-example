@@ -36,6 +36,7 @@ public class Subject {
 
     @JsonIgnore
     @ManyToMany
+    
     @JoinTable(name = "Graduate_Subjects", joinColumns = @JoinColumn(name = "graduate_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
 
     private List<Graduate> graduates;

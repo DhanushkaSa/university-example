@@ -25,6 +25,7 @@ public class UniversityController {
     public ResponseEntity<?> createUniversity(@RequestBody University university) {
 
         University newUniversity = universityService.createUni(university);
+        
         if (newUniversity == null) {
             return ResponseEntity.status(404).body("Null value");
         } else {
@@ -41,6 +42,7 @@ public class UniversityController {
     @GetMapping("/uni/{uniId}")
     public ResponseEntity<?> getUni(@PathVariable Long uniId) {
         University university = universityService.getUni(uniId);
+
         if (university == null) {
             return ResponseEntity.status(404).body("University not found");
         } else {
@@ -51,15 +53,16 @@ public class UniversityController {
     @PutMapping("/uni/{uniId}")
     public ResponseEntity<?> updateUni(@PathVariable Long uniId, @RequestBody University university) {
         University updateUniversity = universityService.updateUni(uniId, university);
+
         if (updateUniversity == null) {
             return ResponseEntity.status(404).body("Update fail");
-        }else{
+        } else {
             return ResponseEntity.status(200).body(updateUniversity);
         }
     }
 
     @DeleteMapping("/uni/{uniId}")
-    public void deleteUni(@PathVariable Long uniId){
-          universityService.deleteUni(uniId);
+    public void deleteUni(@PathVariable Long uniId) {
+        universityService.deleteUni(uniId);
     }
 }

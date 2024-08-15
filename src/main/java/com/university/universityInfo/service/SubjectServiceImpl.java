@@ -32,6 +32,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject updateSubject(Long SubjectId, Subject subject) {
         Subject updateSubject = subjectRepository.findById(SubjectId).orElse(null);
+        
         if (updateSubject == null) {
             return null;
         } else {

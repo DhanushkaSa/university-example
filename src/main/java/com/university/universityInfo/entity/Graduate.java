@@ -35,7 +35,6 @@ public class Graduate {
     private University university;
 
     @ManyToMany(mappedBy = "graduates")
-
     private List<Subject> graduateSubjects;
 
 }
